@@ -11,54 +11,54 @@ using namespace std;
 
 class NTRU {
 public:
-    // ¹¹Ôìº¯Êı£¬Ê¹ÓÃÄ¬ÈÏ²ÎÊı¼¯Éú³É¹«¹²²ÎÊı
+    // æ„é€ å‡½æ•°ï¼Œä½¿ç”¨é»˜è®¤å‚æ•°é›†ç”Ÿæˆå…¬å…±å‚æ•°
     NTRU();
-    // ¹¹Ôìº¯Êı£¬Ê¹ÓÃ¸ø¶¨²ÎÊı¼¯Éú³É¹«¹²²ÎÊı
+    // æ„é€ å‡½æ•°ï¼Œä½¿ç”¨ç»™å®šå‚æ•°é›†ç”Ÿæˆå…¬å…±å‚æ•°
     NTRU(int N, int p, int q, int Df, int Dg, int Dr);
-    // Éú³É¹«Ô¿ºÍË½Ô¿
+    // ç”Ÿæˆå…¬é’¥å’Œç§é’¥
     void generate_keys();
     vector<int> get_public_key();
     pair<vector<int>, vector<int>> get_private_key();
-    // ¼ÓÃÜ
+    // åŠ å¯†
     vector<int> encrypt(const vector<int>& plaintext, const vector<int>& public_key);
     string encrypt(const string& plaintext, string public_key);
-    // ½âÃÜ
+    // è§£å¯†
     vector<int> decrypt(const vector<int>& ciphertext, const pair<vector<int>, vector<int>>& private_key);
     string decrypt(string result, string private_key);
 
 private:
-    int N;   //¶àÏîÊ½ÏµÊı
-    int p;   //ÏµÊıÄ£Á¿
-    int q;   //ËãÊıÄ£Á¿
-    int Df;     //¼ÓÃÜ¹ı³Ì¶àÏîÊ½µÄÌØÕ÷²ÎÊı
+    int N;   //å¤šé¡¹å¼ç³»æ•°
+    int p;   //ç³»æ•°æ¨¡é‡
+    int q;   //ç®—æ•°æ¨¡é‡
+    int Df;     //åŠ å¯†è¿‡ç¨‹å¤šé¡¹å¼çš„ç‰¹å¾å‚æ•°
     int Dg;
     int Dr;
-    vector<int> f;   //Ë½Ô¿
+    vector<int> f;   //ç§é’¥
     vector<int> Fp;
     vector<int> Fq;
     vector<int> g;
-    vector<int> h;  //¹«Ô¿ 
-    vector<int> r;  //¼ÓÃÜ¹ı³ÌÖĞÓÃÓÚÖÃÂÒÃ÷ÎÄµÄĞ¡¶àÏîÊ½
+    vector<int> h;  //å…¬é’¥ 
+    vector<int> r;  //åŠ å¯†è¿‡ç¨‹ä¸­ç”¨äºç½®ä¹±æ˜æ–‡çš„å°å¤šé¡¹å¼
 
-    // Ò»Ğ©¸¨Öúº¯Êı£¬Èç¶àÏîÊ½Éú³ÉºÍ¶àÏîÊ½ÔËËãº¯Êı
-    vector<int> generate_poly(int N, int a, int b);  //Ëæ»úÉú³ÉÊôÓÚ»·R£¨a£¬b£©µÄN-1´Î¶àÏîÊ½
-    void rotateLeft(vector<int>& v, int k);     //¶àÏîÊ½Ñ­»·×óÒÆkÎ»£¬ÓÃÓÚÇóÄ£ÄæËã·¨ÖĞ
-    vector<int> convolution(vector<int> A, vector<int> B);  //¶àÏîÊ½¾í»ıÔËËã
+    // ä¸€äº›è¾…åŠ©å‡½æ•°ï¼Œå¦‚å¤šé¡¹å¼ç”Ÿæˆå’Œå¤šé¡¹å¼è¿ç®—å‡½æ•°
+    vector<int> generate_poly(int N, int a, int b);  //éšæœºç”Ÿæˆå±äºç¯Rï¼ˆaï¼Œbï¼‰çš„N-1æ¬¡å¤šé¡¹å¼
+    void rotateLeft(vector<int>& v, int k);     //å¤šé¡¹å¼å¾ªç¯å·¦ç§»kä½ï¼Œç”¨äºæ±‚æ¨¡é€†ç®—æ³•ä¸­
+    vector<int> convolution(vector<int> A, vector<int> B);  //å¤šé¡¹å¼å·ç§¯è¿ç®—
 
-    vector<int> add_polynomials(const vector<int>& a, const vector<int>& b);      //¶àÏîÊ½¼Ó·¨ 
-    vector<int> subtract_polynomials(const vector<int>& a, const vector<int>& b);//¶àÏîÊ½¼õ·¨
-    void polynomial_division(vector<int> a, vector<int> b, vector<int>& q, vector<int>& r);    //¶àÏîÊ½³ı·¨
+    vector<int> add_polynomials(const vector<int>& a, const vector<int>& b);      //å¤šé¡¹å¼åŠ æ³• 
+    vector<int> subtract_polynomials(const vector<int>& a, const vector<int>& b);//å¤šé¡¹å¼å‡æ³•
+    void polynomial_division(vector<int> a, vector<int> b, vector<int>& q, vector<int>& r);    //å¤šé¡¹å¼é™¤æ³•
 
-    vector<int> inverse_qin_p(const vector<int>& a);  //ÇØ¾ÅÉØ´óÑÜÇóÒ»ÊõÇó¶àÏîÊ½¹ØÓÚpµÄÄ£Äæ£¬Í¨³£p=3
-    vector<int> inverse_qin_q(const vector<int>& a);  //ÇØ¾ÅÉØ´óÑÜÇóÒ»ÊõÇó¶àÏîÊ½¹ØÓÚqµÄÄ£Äæ£¬Í¨³£qÎª2µÄÖ¸ÊıÃİ
+    vector<int> inverse_qin_p(const vector<int>& a);  //ç§¦ä¹éŸ¶å¤§è¡æ±‚ä¸€æœ¯æ±‚å¤šé¡¹å¼å…³äºpçš„æ¨¡é€†ï¼Œé€šå¸¸p=3
+    vector<int> inverse_qin_q(const vector<int>& a);  //ç§¦ä¹éŸ¶å¤§è¡æ±‚ä¸€æœ¯æ±‚å¤šé¡¹å¼å…³äºqçš„æ¨¡é€†ï¼Œé€šå¸¸qä¸º2çš„æŒ‡æ•°å¹‚
 
-    void mod_p(vector<int>& a);  //¶àÏîÊ½Ä£p£¬ÏµÊıµ÷ÕûÔÚ{-1£¬0£¬1}ÖĞ
-    void mod_2(vector<int>& a);  //¶àÏîÊ½Ä£2£¬ÏµÊıµ÷ÕûÔÚ{0£¬1}ÖĞ
-    void mod_q(vector<int>& a);   //¶àÏîÊ½Ä£q£¬ÏµÊıµ÷ÕûÔÚ (-q/2£¬q/2)ÖĞ
-    void remove_zeros(vector<int>& a); //È¥µô¶àÏîÊ½Ä©Î²µÄ0
+    void mod_p(vector<int>& a);  //å¤šé¡¹å¼æ¨¡pï¼Œç³»æ•°è°ƒæ•´åœ¨{-1ï¼Œ0ï¼Œ1}ä¸­
+    void mod_2(vector<int>& a);  //å¤šé¡¹å¼æ¨¡2ï¼Œç³»æ•°è°ƒæ•´åœ¨{0ï¼Œ1}ä¸­
+    void mod_q(vector<int>& a);   //å¤šé¡¹å¼æ¨¡qï¼Œç³»æ•°è°ƒæ•´åœ¨ (-q/2ï¼Œq/2)ä¸­
+    void remove_zeros(vector<int>& a); //å»æ‰å¤šé¡¹å¼æœ«å°¾çš„0
 
-    vector<vector<int>> convert(const string& str);      //×ª»»º¯Êı£¬½«stringÃ÷ÎÄ×ª»»ÎªÈı½øÖÆ£¬·ÖÎª³¤¶ÈÎªNµÄ×é¡£
-    string reverse_convert(vector<vector<int>> split);    //Äæ×ª»»º¯Êı£¬½«·Ö×é³¤¶ÈÎªNµÄÊı×é£¬×ª»»ÎªstringÀàĞÍ
+    vector<vector<int>> convert(const string& str);      //è½¬æ¢å‡½æ•°ï¼Œå°†stringæ˜æ–‡è½¬æ¢ä¸ºä¸‰è¿›åˆ¶ï¼Œåˆ†ä¸ºé•¿åº¦ä¸ºNçš„ç»„ã€‚
+    string reverse_convert(vector<vector<int>> split);    //é€†è½¬æ¢å‡½æ•°ï¼Œå°†åˆ†ç»„é•¿åº¦ä¸ºNçš„æ•°ç»„ï¼Œè½¬æ¢ä¸ºstringç±»å‹
 };
 
 NTRU::NTRU() {
@@ -124,29 +124,29 @@ vector<int> NTRU::convolution(vector<int> A, vector<int> B) {
 }
 
 void NTRU::polynomial_division(vector<int> a, vector<int> b, vector<int>& q, vector<int>& r) {
-    int n = a.size() - 1;  // ¶àÏîÊ½ a µÄ´ÎÊı  
-    int m = b.size() - 1;  // ¶àÏîÊ½ b µÄ´ÎÊı   
+    int n = a.size() - 1;  // å¤šé¡¹å¼ a çš„æ¬¡æ•°  
+    int m = b.size() - 1;  // å¤šé¡¹å¼ b çš„æ¬¡æ•°   
 
-    //if (m < 0) throw std::invalid_argument("Òì³££º³ıÊı¶àÏîÊ½Îª0¶àÏîÊ½");
+    //if (m < 0) throw std::invalid_argument("å¼‚å¸¸ï¼šé™¤æ•°å¤šé¡¹å¼ä¸º0å¤šé¡¹å¼");
 
-    if (n < m) {       //aµÄ´ÎÊıµÍÓÚbÊ±
+    if (n < m) {       //açš„æ¬¡æ•°ä½äºbæ—¶
         q.clear();
         r = a;
         return;
     }
 
-    q.resize(n - m + 1);   // ³õÊ¼»¯ÉÌµÄÏµÊıÏòÁ¿ q       
-    r.resize(m);           // ³õÊ¼»¯ÓàÊıµÄÏµÊıÏòÁ¿ r      
+    q.resize(n - m + 1);   // åˆå§‹åŒ–å•†çš„ç³»æ•°å‘é‡ q       
+    r.resize(m);           // åˆå§‹åŒ–ä½™æ•°çš„ç³»æ•°å‘é‡ r      
 
-    for (int i = n - m; i >= 0; i--) {  // ´Ó¸ß´ÎÏîµ½µÍ´ÎÏîÖğ²½¼ÆËãÉÌµÄÏµÊı      
-        q[i] = a[i + m] / b[m];         // ¼ÆËãµ±Ç°ÏîµÄÉÌ              
-        for (int j = i + m - 1, k = m - 1; k >= 0; j--, k--) {  // ÓÃµ±Ç°ÏîµÄÉÌ¸üĞÂÓàÊı    
-            a[j] -= q[i] * b[k];        // ¼ÆËã a(x) - q(x) * b(x)     
+    for (int i = n - m; i >= 0; i--) {  // ä»é«˜æ¬¡é¡¹åˆ°ä½æ¬¡é¡¹é€æ­¥è®¡ç®—å•†çš„ç³»æ•°      
+        q[i] = a[i + m] / b[m];         // è®¡ç®—å½“å‰é¡¹çš„å•†              
+        for (int j = i + m - 1, k = m - 1; k >= 0; j--, k--) {  // ç”¨å½“å‰é¡¹çš„å•†æ›´æ–°ä½™æ•°    
+            a[j] -= q[i] * b[k];        // è®¡ç®— a(x) - q(x) * b(x)     
         }
     }
     if (m == 0) r = vector<int>{ 0 };
     else {
-        for (int i = 0; i < m; i++) {  // ¸´ÖÆÓàÊıµÄÏµÊı
+        for (int i = 0; i < m; i++) {  // å¤åˆ¶ä½™æ•°çš„ç³»æ•°
             r[i] = a[i];
         }
     }
@@ -182,16 +182,16 @@ vector<int> NTRU::subtract_polynomials(const vector<int>& a, const vector<int>& 
     return result;
 }
 void NTRU::remove_zeros(vector<int>& a) {
-    // Èç¹ûvectorÎª¿Õ£¬Ö±½Ó·µ»Ø
+    // å¦‚æœvectorä¸ºç©ºï¼Œç›´æ¥è¿”å›
     if (a.empty()) return;
     if (a == vector<int> {0}) return;
-    // ´ÓvectorµÄÄ©Î²¿ªÊ¼±éÀú
+    // ä»vectorçš„æœ«å°¾å¼€å§‹éå†
     for (int i = a.size() - 1; i >= 1; i--) {
-        // Èç¹ûµ±Ç°ÔªËØÊÇ0£¬¾ÍÉ¾³ıËü
+        // å¦‚æœå½“å‰å…ƒç´ æ˜¯0ï¼Œå°±åˆ é™¤å®ƒ
         if (a[i] == 0) {
             a.pop_back();
         }
-        //·ñÔò£¬ÍË³öÑ­»·
+        //å¦åˆ™ï¼Œé€€å‡ºå¾ªç¯
         else {
             break;
         }
@@ -228,9 +228,9 @@ void NTRU::mod_q(vector<int>& a) {
         if (i > q / 2) i -= q;
     }
 }
-//ÇØ¾ÅÉØ´óÑÜÇóÒ»ÊõÇó¶àÏîÊ½¹ØÓÚpµÄÄ£Äæ£¬Í¨³£p=3
+//ç§¦ä¹éŸ¶å¤§è¡æ±‚ä¸€æœ¯æ±‚å¤šé¡¹å¼å…³äºpçš„æ¨¡é€†ï¼Œé€šå¸¸p=3
 vector<int> NTRU::inverse_qin_p(const vector<int>& a) {
-    //³õÊ¼»¯×´Ì¬¾ØÕó
+    //åˆå§‹åŒ–çŠ¶æ€çŸ©é˜µ
     vector<int> X_11 = { 1 };
     vector<int> X_12 = a;
     remove_zeros(X_12);
@@ -240,11 +240,11 @@ vector<int> NTRU::inverse_qin_p(const vector<int>& a) {
     X_22[N] = 1;
     vector<int> Q, R;
 
-    //ÇóÄ£pµÄÄ£Äæ¶àÏîÊ½
+    //æ±‚æ¨¡pçš„æ¨¡é€†å¤šé¡¹å¼
     while (1) {
         if (X_22.size() > X_12.size()) {
             polynomial_division(X_22, X_12, Q, R);
-            //ÕâÀïÄ£p¡¢È¥Í·²¿µÄ0£¬²¢¶ÔR½øĞĞ¿ÉÄÜµÄÌæ»»£¬ÊÇÎªÁËÂú×ã´óÑÜÇóÒ»ÊõÒªÇó£¬½«µ÷ÕûRÎª×îĞ¡ÕıÊ£Óà
+            //è¿™é‡Œæ¨¡pã€å»å¤´éƒ¨çš„0ï¼Œå¹¶å¯¹Rè¿›è¡Œå¯èƒ½çš„æ›¿æ¢ï¼Œæ˜¯ä¸ºäº†æ»¡è¶³å¤§è¡æ±‚ä¸€æœ¯è¦æ±‚ï¼Œå°†è°ƒæ•´Rä¸ºæœ€å°æ­£å‰©ä½™
             mod_p(Q);
             mod_p(R);
             remove_zeros(Q);
@@ -257,7 +257,7 @@ vector<int> NTRU::inverse_qin_p(const vector<int>& a) {
             X_21 = add_polynomials(X_21, convolution(Q, X_11));
             X_22 = R;
 
-            //½«²ÎÊıÄ£p²¢È¥µôÍ·²¿µÄ0
+            //å°†å‚æ•°æ¨¡på¹¶å»æ‰å¤´éƒ¨çš„0
             mod_p(X_21);
             mod_p(X_22);
             remove_zeros(X_12);
@@ -267,7 +267,7 @@ vector<int> NTRU::inverse_qin_p(const vector<int>& a) {
         }
         else if (X_22.size() < X_12.size()) {
             polynomial_division(X_12, X_22, Q, R);
-            //ÕâÀïÄ£p¡¢È¥Í·²¿µÄ0£¬²¢¶ÔR½øĞĞ¿ÉÄÜµÄÌæ»»£¬ÊÇÎªÁËÂú×ã´óÑÜÇóÒ»ÊõÒªÇó£¬½«µ÷ÕûRÎª×îĞ¡ÕıÊ£Óà
+            //è¿™é‡Œæ¨¡pã€å»å¤´éƒ¨çš„0ï¼Œå¹¶å¯¹Rè¿›è¡Œå¯èƒ½çš„æ›¿æ¢ï¼Œæ˜¯ä¸ºäº†æ»¡è¶³å¤§è¡æ±‚ä¸€æœ¯è¦æ±‚ï¼Œå°†è°ƒæ•´Rä¸ºæœ€å°æ­£å‰©ä½™
             mod_p(Q);
             mod_p(R);
             remove_zeros(Q);
@@ -280,7 +280,7 @@ vector<int> NTRU::inverse_qin_p(const vector<int>& a) {
             X_11 = add_polynomials(X_11, convolution(Q, X_21));
             X_12 = R;
 
-            //½«²ÎÊıÄ£p²¢È¥µôÍ·²¿µÄ0
+            //å°†å‚æ•°æ¨¡på¹¶å»æ‰å¤´éƒ¨çš„0
             mod_p(X_11);
             mod_p(X_12);
             remove_zeros(X_12);
@@ -288,7 +288,7 @@ vector<int> NTRU::inverse_qin_p(const vector<int>& a) {
             remove_zeros(X_11);
             remove_zeros(X_21);
         }
-        //´óÑÜÇóÒ»ÊõÇó¶àÏîÊ½Ä£ÄæÊ±£¬X_12²ÎÊı¿ÉÄÜÎª¸ºÊı£¬ËùÒÔ¶Ô¡À1·Ö¿ªÌÖÂÛ
+        //å¤§è¡æ±‚ä¸€æœ¯æ±‚å¤šé¡¹å¼æ¨¡é€†æ—¶ï¼ŒX_12å‚æ•°å¯èƒ½ä¸ºè´Ÿæ•°ï¼Œæ‰€ä»¥å¯¹Â±1åˆ†å¼€è®¨è®º
         if (X_12 == vector<int>{1}) {
             X_11.resize(N);
             return X_11;
@@ -303,9 +303,9 @@ vector<int> NTRU::inverse_qin_p(const vector<int>& a) {
     }
 }
 
-//ÇØ¾ÅÉØ´óÑÜÇóÒ»ÊõÇó¶àÏîÊ½¹ØÓÚqµÄÄ£Äæ£¬Í¨³£qÎª2µÄÖ¸ÊıÃİ
+//ç§¦ä¹éŸ¶å¤§è¡æ±‚ä¸€æœ¯æ±‚å¤šé¡¹å¼å…³äºqçš„æ¨¡é€†ï¼Œé€šå¸¸qä¸º2çš„æŒ‡æ•°å¹‚
 vector<int> NTRU::inverse_qin_q(const vector<int>& a) {
-    //³õÊ¼»¯×´Ì¬¾ØÕó
+    //åˆå§‹åŒ–çŠ¶æ€çŸ©é˜µ
     vector<int> X_11 = { 1 };
     vector<int> X_12 = a;
     remove_zeros(X_12);
@@ -315,11 +315,11 @@ vector<int> NTRU::inverse_qin_q(const vector<int>& a) {
     X_22[N] = 1;
     vector<int> Q, R;
 
-    //ÇóÄ£2µÄÄ£Äæ¶àÏîÊ½
+    //æ±‚æ¨¡2çš„æ¨¡é€†å¤šé¡¹å¼
     while (1) {
         if (X_22.size() > X_12.size()) {
             polynomial_division(X_22, X_12, Q, R);
-            //ÕâÀïÄ£2¡¢È¥Í·²¿µÄ0£¬²¢¶ÔR½øĞĞ¿ÉÄÜµÄÌæ»»£¬ÊÇÎªÁËÂú×ã´óÑÜÇóÒ»ÊõÒªÇó£¬½«µ÷ÕûRÎª×îĞ¡ÕıÊ£Óà
+            //è¿™é‡Œæ¨¡2ã€å»å¤´éƒ¨çš„0ï¼Œå¹¶å¯¹Rè¿›è¡Œå¯èƒ½çš„æ›¿æ¢ï¼Œæ˜¯ä¸ºäº†æ»¡è¶³å¤§è¡æ±‚ä¸€æœ¯è¦æ±‚ï¼Œå°†è°ƒæ•´Rä¸ºæœ€å°æ­£å‰©ä½™
             mod_2(Q);
             mod_2(R);
             remove_zeros(Q);
@@ -331,7 +331,7 @@ vector<int> NTRU::inverse_qin_q(const vector<int>& a) {
 
             X_21 = add_polynomials(X_21, convolution(Q, X_11));
             X_22 = R;
-            //½«²ÎÊıÄ£2²¢È¥µôÍ·²¿µÄ0
+            //å°†å‚æ•°æ¨¡2å¹¶å»æ‰å¤´éƒ¨çš„0
             mod_2(X_21);
             mod_2(X_22);
             remove_zeros(X_12);
@@ -342,7 +342,7 @@ vector<int> NTRU::inverse_qin_q(const vector<int>& a) {
         }
         else if (X_22.size() < X_12.size()) {
             polynomial_division(X_12, X_22, Q, R);
-            //ÕâÀïÄ£2¡¢È¥Í·²¿µÄ0£¬²¢¶ÔR½øĞĞ¿ÉÄÜµÄÌæ»»£¬ÊÇÎªÁËÂú×ã´óÑÜÇóÒ»ÊõÒªÇó£¬½«µ÷ÕûRÎª×îĞ¡ÕıÊ£Óà
+            //è¿™é‡Œæ¨¡2ã€å»å¤´éƒ¨çš„0ï¼Œå¹¶å¯¹Rè¿›è¡Œå¯èƒ½çš„æ›¿æ¢ï¼Œæ˜¯ä¸ºäº†æ»¡è¶³å¤§è¡æ±‚ä¸€æœ¯è¦æ±‚ï¼Œå°†è°ƒæ•´Rä¸ºæœ€å°æ­£å‰©ä½™
             mod_2(Q);
             mod_2(R);
             remove_zeros(Q);
@@ -355,7 +355,7 @@ vector<int> NTRU::inverse_qin_q(const vector<int>& a) {
             X_11 = add_polynomials(X_11, convolution(Q, X_21));
             X_12 = R;
 
-            //½«²ÎÊıÄ£2²¢È¥µôÍ·²¿µÄ0
+            //å°†å‚æ•°æ¨¡2å¹¶å»æ‰å¤´éƒ¨çš„0
             mod_2(X_11);
             mod_2(X_12);
             remove_zeros(X_12);
@@ -363,7 +363,7 @@ vector<int> NTRU::inverse_qin_q(const vector<int>& a) {
             remove_zeros(X_11);
             remove_zeros(X_21);
         }
-        //´óÑÜÇóÒ»ÊõÇó¶àÏîÊ½Ä£ÄæÊ±£¬X_12²ÎÊı¿ÉÄÜÎª¸ºÊı£¬ËùÒÔ¶Ô¡À1·Ö¿ªÌÖÂÛ
+        //å¤§è¡æ±‚ä¸€æœ¯æ±‚å¤šé¡¹å¼æ¨¡é€†æ—¶ï¼ŒX_12å‚æ•°å¯èƒ½ä¸ºè´Ÿæ•°ï¼Œæ‰€ä»¥å¯¹Â±1åˆ†å¼€è®¨è®º
         if (X_12 == vector<int>{1}) {
             break;
         }
@@ -374,7 +374,7 @@ vector<int> NTRU::inverse_qin_q(const vector<int>& a) {
             break;
         }
     }
-    //Å£¶Ùµü´ú·¨£¬¸ù¾İÄ£2µÄÄ£Äæ¶àÏîÊ½X_12£¬ÇóÄ£qµÄÄ£Äæ¶àÏîÊ½
+    //ç‰›é¡¿è¿­ä»£æ³•ï¼Œæ ¹æ®æ¨¡2çš„æ¨¡é€†å¤šé¡¹å¼X_12ï¼Œæ±‚æ¨¡qçš„æ¨¡é€†å¤šé¡¹å¼
     vector<int> b = X_11;
     int v = 2;
     while (v < q) {
@@ -540,7 +540,7 @@ string NTRU::decrypt(string result, string private_key) {
 vector<vector<int>> NTRU::convert(const string& str) {
     string binary;
     for (char c : str) {
-        // Ê¹ÓÃstd::bitsetÈİÆ÷À´»ñÈ¡×Ö·ûµÄ¶ş½øÖÆ±íÊ¾
+        // ä½¿ç”¨std::bitsetå®¹å™¨æ¥è·å–å­—ç¬¦çš„äºŒè¿›åˆ¶è¡¨ç¤º
         bitset<8> bits(c);
         binary += bits.to_string();
     }
@@ -559,12 +559,12 @@ vector<vector<int>> NTRU::convert(const string& str) {
     vector<vector<int>> result;
     ternary.push_back(1);
     int i = 0;
-    // ´Ó×î¸ßÎ»¿ªÊ¼±éÀú
+    // ä»æœ€é«˜ä½å¼€å§‹éå†
     while (i < ternary.size()) {
-        // ´´½¨Ò»¸öĞÂµÄvector<int>¶ÔÏóÀ´´æ´¢µ±Ç°µÄN¸öÔªËØ
+        // åˆ›å»ºä¸€ä¸ªæ–°çš„vector<int>å¯¹è±¡æ¥å­˜å‚¨å½“å‰çš„Nä¸ªå…ƒç´ 
         vector<int> part;
         for (int j = 0; j < N && i < ternary.size(); j++) {
-            // ½«µ±Ç°ÔªËØÌí¼Óµ½partÖĞ£¬²¢ÒÆ¶¯µ½ÏÂÒ»¸öÔªËØ
+            // å°†å½“å‰å…ƒç´ æ·»åŠ åˆ°partä¸­ï¼Œå¹¶ç§»åŠ¨åˆ°ä¸‹ä¸€ä¸ªå…ƒç´ 
             part.push_back(ternary[i]);
             i++;
         }
@@ -573,7 +573,7 @@ vector<vector<int>> NTRU::convert(const string& str) {
                 part.push_back(0);
             }
         }
-        // ½«partÌí¼Óµ½½á¹ûÖĞ
+        // å°†partæ·»åŠ åˆ°ç»“æœä¸­
         result.push_back(part);
     }
     return result;
@@ -582,7 +582,7 @@ vector<vector<int>> NTRU::convert(const string& str) {
 }
 
 
-//Äæº¯Êı£¬×ª»»N³¤µÄÈı½øÖÆ×Ö·û´®ÎªÎÄ×Ö×Ö·û´®
+//é€†å‡½æ•°ï¼Œè½¬æ¢Né•¿çš„ä¸‰è¿›åˆ¶å­—ç¬¦ä¸²ä¸ºæ–‡å­—å­—ç¬¦ä¸²
 string NTRU::reverse_convert(vector<vector<int>> split) {
     vector<int> ternary;
 
@@ -592,14 +592,22 @@ string NTRU::reverse_convert(vector<vector<int>> split) {
     }
     tail.pop_back();
 
-    if (split.size() == 1) {
-        ternary = tail;
-    }
-    else {
-        for (int i = 0; i < split.size() - 1; i++) {
+    if (tail.size() == 0) {
+        split.pop_back();
+        for (int i = 0; i < split.size(); i++) {
             ternary.insert(ternary.end(), split[i].begin(), split[i].end());
         }
-        ternary.insert(ternary.end(), tail.begin(), tail.end());
+    }
+    else {
+        if (split.size() == 1) {
+            ternary = tail;
+        }
+        else {
+            for (int i = 0; i < split.size() - 1; i++) {
+                ternary.insert(ternary.end(), split[i].begin(), split[i].end());
+            }
+            ternary.insert(ternary.end(), tail.begin(), tail.end());
+        }
     }
 
     string binary = "";
@@ -618,19 +626,19 @@ string NTRU::reverse_convert(vector<vector<int>> split) {
     }
     string str;
     for (size_t i = 0; i < binary.size(); i += 8) {
-        // Ã¿8Î»Ò»×é£¬½«Æä×ª»¯Îª¶ÔÓ¦µÄASCII×Ö·û
+        // æ¯8ä½ä¸€ç»„ï¼Œå°†å…¶è½¬åŒ–ä¸ºå¯¹åº”çš„ASCIIå­—ç¬¦
         bitset<8> bits(binary.substr(i, 8));
         str += char(bits.to_ulong());
     }
     return str;
 }
 int main() {
-    cout << "          ^»¶Ó­Ê¹ÓÃNTRU¼ÓÃÜÈí¼ş^              " << endl;
+    cout << "          ^æ¬¢è¿ä½¿ç”¨NTRUåŠ å¯†è½¯ä»¶^              " << endl;
     cout << "Welcome to NTRU Public-key Encryption Software" << endl;
-    cout << "ÇëÑ¡ÔñÄúÒªÊ¹ÓÃµÄ¹¦ÄÜ£¬ÇëÊäÈëÊı×Ö0»ò1»ò2²¢°´»Ø³µÈ·ÈÏ" << endl;
-    cout << "0. ÃÜÔ¿Éú³É" << endl;
-    cout << "1. ¼ÓÃÜ" << endl;
-    cout << "2. ½âÃÜ" << endl;
+    cout << "è¯·é€‰æ‹©æ‚¨è¦ä½¿ç”¨çš„åŠŸèƒ½ï¼Œè¯·è¾“å…¥æ•°å­—0æˆ–1æˆ–2å¹¶æŒ‰å›è½¦ç¡®è®¤" << endl;
+    cout << "0. å¯†é’¥ç”Ÿæˆ" << endl;
+    cout << "1. åŠ å¯†" << endl;
+    cout << "2. è§£å¯†" << endl;
 
     string tmp;
     while (1) {
@@ -674,29 +682,29 @@ int main() {
             }
             prikey = osprikey.str();
 
-            cout << "ÄúµÄ¹«Ô¿Îª£º" << endl;
+            cout << "æ‚¨çš„å…¬é’¥ä¸ºï¼š" << endl;
             cout << pubkey << endl;
-            cout << "ÄúµÄË½Ô¿Îª£º" << endl;
+            cout << "æ‚¨çš„ç§é’¥ä¸ºï¼š" << endl;
             cout << prikey << endl;
-            cout << "Çë±£¹ÜºÃÄúµÄÃÜÔ¿" << endl;
-            cout << "»¶Ó­ÔÙ´ÎÊ¹ÓÃ£¡" << endl;
+            cout << "è¯·ä¿ç®¡å¥½æ‚¨çš„å¯†é’¥" << endl;
+            cout << "æ¬¢è¿å†æ¬¡ä½¿ç”¨ï¼" << endl;
             cout << "      ----implemented by Rubby Tso" << endl;
             break;
         }
         else if (tmp == "1") {
             string message,publickey;
             cin.ignore();
-            cout << "ÇëÊäÈëÄúÒª¼ÓÃÜµÄÏûÏ¢£º" << endl;
+            cout << "è¯·è¾“å…¥æ‚¨è¦åŠ å¯†çš„æ¶ˆæ¯ï¼š" << endl;
             getline(cin, message);
-            cout << "ÇëÊäÈëÄúµÄ¹«Ô¿" << endl;
+            cout << "è¯·è¾“å…¥æ‚¨çš„å…¬é’¥" << endl;
             cin >> publickey;
             NTRU ntru;
             string ciphertext;
             ciphertext = ntru.encrypt(message, publickey);
-            cout << "ÄúµÄÃÜÎÄÎª£º" << endl;
+            cout << "æ‚¨çš„å¯†æ–‡ä¸ºï¼š" << endl;
             cout << ciphertext << endl;
-            cout << "Çë±£¹ÜºÃÄúµÄÃÜÎÄ! " << endl;
-            cout << "»¶Ó­ÔÙ´ÎÊ¹ÓÃ£¡" << endl;
+            cout << "è¯·ä¿ç®¡å¥½æ‚¨çš„å¯†æ–‡! " << endl;
+            cout << "æ¬¢è¿å†æ¬¡ä½¿ç”¨ï¼" << endl;
             cout << "      ----implemented by Rubby Tso" << endl;
             break;
 
@@ -704,22 +712,22 @@ int main() {
         else if (tmp == "2") {
             string ciphertext, prikey;
             cin.ignore();
-            cout << "ÇëÊäÈëÄúµÄÃÜÎÄ£º" << endl;
+            cout << "è¯·è¾“å…¥æ‚¨çš„å¯†æ–‡ï¼š" << endl;
             getline(cin, ciphertext);
-            cout << "ÇëÊäÈëÄúµÄË½Ô¿£º" << endl;
+            cout << "è¯·è¾“å…¥æ‚¨çš„ç§é’¥ï¼š" << endl;
             getline(cin, prikey);
 
             NTRU ntru;
             string plaintext;
             plaintext = ntru.decrypt(ciphertext, prikey);
-            cout << "ÄúµÄÃ÷ÎÄÎª£º" << endl;
+            cout << "æ‚¨çš„æ˜æ–‡ä¸ºï¼š" << endl;
             cout << plaintext << endl;
-            cout << "»¶Ó­ÔÙ´ÎÊ¹ÓÃ£¡" << endl;
+            cout << "æ¬¢è¿å†æ¬¡ä½¿ç”¨ï¼" << endl;
             cout << "      ----implemented by Rubby Tso" << endl;
             break;
         }
         else {
-            cout << "ÇëÊäÈëÊı×Ö0»ò1»ò2²¢°´»Ø³µÈ·ÈÏ"<<endl;
+            cout << "è¯·è¾“å…¥æ•°å­—0æˆ–1æˆ–2å¹¶æŒ‰å›è½¦ç¡®è®¤"<<endl;
         }
     }
     
