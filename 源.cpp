@@ -8,7 +8,7 @@
 #include<string>
 #include<sstream>
 using namespace std;
-
+char base64[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+=";
 class NTRU {
 public:
     // 构造函数，使用默认参数集生成公共参数
@@ -467,11 +467,10 @@ string NTRU::encrypt(const string& plaintext, string public_key) {
     ostringstream osresult;
     for (vector<int> i : b) {
         for (int j : i) {
-            osresult << j << " ";
+            osresult << base64[j + 31];
         }
-        osresult << "end" << " ";
+        osresult <<" ";
     }
-    result = osresult.str();
 
     return result;
 
@@ -483,15 +482,14 @@ string NTRU::decrypt(string result, string private_key) {
     vector<vector<int>> ciphertext;
     vector<int> part;
     istringstream iss(result);
-    string word;
-    while (iss >> word) {
-        if (word == "end") {
+    char word;
+    while (iss.get(word)) {
+        if (word == ' ') {
             ciphertext.push_back(part);
             part.clear();
             continue;
         }
-        int num = stoi(word);
-        part.push_back(num);
+        part.push_back(find(base64, base64 + 64, word) - base64 - 31);
     }
 
 
