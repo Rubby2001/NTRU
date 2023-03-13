@@ -687,8 +687,6 @@ int main() {
             cout << "请保管好您的密钥" << endl;
             cout << "欢迎再次使用！" << endl;
             cout << "      ----implemented by Rubby Tso" << endl;
-            unsigned char* a = (unsigned char*)prikey.c_str();
-            cout << strlen((char*)a) << endl;
             system("pause");
             break;
         }
