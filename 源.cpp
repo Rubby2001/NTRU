@@ -469,7 +469,7 @@ string NTRU::encrypt(const string& plaintext, string public_key) {
         for (int j : i) {
             osresult << base64[j + 31];
         }
-        osresult << " ";
+        osresult << "!";
     }
     result = osresult.str();
     return result;
@@ -484,7 +484,7 @@ string NTRU::decrypt(string result, string private_key) {
     istringstream iss(result);
     char word;
     while (iss.get(word)) {
-        if (word == ' ') {
+        if (word == '!') {
             ciphertext.push_back(part);
             part.clear();
             continue;
