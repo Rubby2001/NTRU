@@ -453,9 +453,9 @@ string NTRU::encrypt(const string& plaintext, string public_key) {
     vector<vector<int>> a = convert(plaintext);
     vector<int> h;
     istringstream ish(public_key);
-    int num;
-    while (ish >> num) {
-        h.push_back(num);
+    char c;
+    while (ish.get(c)) {
+        h.push_back(find(base64, base64 + 64, c) - base64 - 31);
     }
 
     vector<vector<int>> b;
@@ -469,9 +469,9 @@ string NTRU::encrypt(const string& plaintext, string public_key) {
         for (int j : i) {
             osresult << base64[j + 31];
         }
-        osresult <<" ";
+        osresult << " ";
     }
-
+    result = osresult.str();
     return result;
 
 }
@@ -652,7 +652,7 @@ int main() {
             ostringstream ospubkey;
             ostringstream osprikey;
             for (int i : public_key) {
-                ospubkey << i << " ";
+                ospubkey << base64[i + 31];
             }
             pubkey = ospubkey.str();
             for (int i : private_key.first) {
@@ -687,6 +687,9 @@ int main() {
             cout << "请保管好您的密钥" << endl;
             cout << "欢迎再次使用！" << endl;
             cout << "      ----implemented by Rubby Tso" << endl;
+            unsigned char* a = (unsigned char*)prikey.c_str();
+            cout << strlen((char*)a) << endl;
+            system("pause");
             break;
         }
         else if (tmp == "1") {
@@ -704,6 +707,7 @@ int main() {
             cout << "请保管好您的密文! " << endl;
             cout << "欢迎再次使用！" << endl;
             cout << "      ----implemented by Rubby Tso" << endl;
+            system("pause");
             break;
 
         }
@@ -722,6 +726,7 @@ int main() {
             cout << plaintext << endl;
             cout << "欢迎再次使用！" << endl;
             cout << "      ----implemented by Rubby Tso" << endl;
+            system("pause");
             break;
         }
         else {
